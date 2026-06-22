@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#05070d" />
+  <meta name="description" content="Project Zenith turns every location into a personal celestial observatory with live sky tracking, astronomy intelligence, and location-aware night sky insights." />
+  <title>Project Zenith | Celestial Radar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="professional.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+  <div class="ambient-grid" aria-hidden="true"></div>
+
+  <nav class="cosmic-sidebar" aria-label="Mission navigation">
+    <div class="sidebar-header">
+      <div class="brand-mark" aria-hidden="true"><span class="brand-orbit"></span><span class="brand-core"></span></div>
+      <div class="brand-copy"><span class="brand-name">PROJECT ZENITH</span><span class="brand-subtitle">THE CELESTIAL EYE</span></div>
+    </div>
+    <div class="sidebar-buttons">
+      <!-- Highlighted PROJECT ZENITH Section -->
+      <div class="project-zenith-section">
+        <div class="zenith-section-label">🛰 PROJECT ZENITH</div>
+        <button class="sidebar-btn zenith-radar-btn" data-panel="zenith-radar" title="Zenith Radar">
+          <span class="zenith-icon">🛰</span>
+          <span>Zenith Radar</span>
+          <span class="live-indicator"><span class="live-dot"></span>LIVE</span>
+        </button>
+      </div>
+
+      <div class="nav-section-label">EXPLORE</div>
+      <button class="sidebar-btn" data-panel="solar-system-3d" title="3D Solar System"><span class="nav-index">01</span><span>Solar System 3D</span></button>
+      <button class="sidebar-btn" data-panel="moon" title="Moon Data"><span class="nav-index">02</span><span>Lunar Monitor</span></button>
+      <button class="sidebar-btn" data-panel="sun" title="Sun Data"><span class="nav-index">03</span><span>Solar Monitor</span></button>
+      <button class="sidebar-btn" data-panel="satellites" title="Satellites"><span class="nav-index">04</span><span>Orbital Assets</span></button>
+      <div class="sidebar-category">DISCOVER</div>
+      <button class="sidebar-btn" data-panel="historical" title="Historical Events"><span class="nav-index">05</span><span>Space History</span></button>
+      <button class="sidebar-btn" data-panel="aurora" title="Aurora Lab"><span class="nav-index">06</span><span>Aurora Lab</span></button>
+      <button class="sidebar-btn" data-panel="constellations" title="Constellation Map"><span class="nav-index">07</span><span>Constellations</span></button>
+      <button class="sidebar-btn" data-panel="news" title="Space News"><span class="nav-index">08</span><span>Mission Feed</span></button>
+      <button class="sidebar-btn" data-panel="quiz" title="Cosmic Quiz"><span class="nav-index">09</span><span>Knowledge Lab</span></button>
+      <div class="sidebar-category">INTERACT</div>
+      <button class="sidebar-btn" data-panel="voice" title="Voice Commands"><span class="nav-index">10</span><span>Voice Interface</span></button>
+      <button class="sidebar-btn" data-panel="creators" title="The Creators"><span class="nav-index">11</span><span>Team</span></button>
+    </div>
+    <div class="sidebar-status"><span class="status-dot"></span><span>SYSTEMS NOMINAL</span></div>
+  </nav>
+
+  <div class="panel-overlay" id="panelOverlay">
+    <div class="panel-content">
+      <button class="close-panel" onclick="closePanel()" aria-label="Close panel">Close</button>
+      <div id="panelContent"></div>
+    </div>
+  </div>
+
+  <main class="home-shell">
+    <header class="topbar">
+      <div class="topbar-coordinate">CELESTIAL RADAR / EARTH</div>
+      <div class="topbar-meta"><span>PROJECT ZENITH // 2026</span><button class="topbar-link" onclick="showCredits()">Data sources</button></div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span></span> PERSONAL NIGHT SKY OBSERVATORY</div>
+        <h1>What is happening<br><em>above you tonight?</em></h1>
+        <p class="front-whisper">Project Zenith scans your current location, plots the visible sky, and tells you what to observe next.</p>
+        <div class="hero-actions">
+          <button class="primary-cta" onclick="openPanel('zenith-radar')">Scan the Sky <span>↗</span></button>
+          <button class="secondary-cta" onclick="document.getElementById('meetNova')?.scrollIntoView({ behavior: 'smooth' })">Meet Nova</button>
+        </div>
+        <div class="hero-metrics">
+          <div><strong>Live</strong><span>Local sky updates</span></div>
+          <div><strong>Celestial</strong><span>Visibility insights</span></div>
+          <div><strong>Guided</strong><span>Observation suggestions</span></div>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="hero-nebula"></div><div class="planet-glow"></div><div class="hero-planet"></div>
+        <div class="floating-world world-one"></div><div class="floating-world world-two"></div><div class="floating-world world-three"></div>
+        <div class="orbit orbit-one"><span></span></div><div class="orbit orbit-two"><span></span></div>
+        <div class="telemetry-card telemetry-top"><span>LIVE SIGNAL</span><strong>7.83 Hz</strong><small>EARTH RESONANCE</small></div>
+        <div class="telemetry-card telemetry-bottom"><span>OBSERVATORY</span><strong>ONLINE</strong><small>ALL SYSTEMS NOMINAL</small></div>
+      </div>
+    </section>
+
+    <section class="capability-strip" aria-label="Core capabilities">
+      <span>ASTRONOMY DATA</span><i></i><span>THREE.JS</span><i></i><span>VOICE AI</span><i></i><span>LIVE ORBITS</span><i></i><span>NIGHT SKY</span>
+    </section>
+
+    <section class="story-section journey-section reveal-section" id="cosmicJourney">
+      <div class="section-heading">
+        <div><span class="section-index">01 / SKY SCAN COMMAND</span><h2>Find what is visible tonight.</h2></div>
+        <p>Use the Zenith Radar to scan your local sky, then explore the objects and constellations that are above your horizon.</p>
+      </div>
+      <div class="destination-grid">
+        <button class="destination-card earth-card" onclick="openPanel('zenith-radar')"><span class="destination-visual"></span><span class="destination-code">SKY / 00</span><strong>Zenith Radar</strong><small>Live local sky intelligence</small><i>Scan now ↗</i></button>
+        <button class="destination-card moon-card" onclick="openPanel('moon')"><span class="destination-visual"></span><span class="destination-code">LUNAR / 01</span><strong>Moon</strong><small>Local Moon conditions</small><i>Open lunar data ↗</i></button>
+        <button class="destination-card mars-card" onclick="openSolarSystemAt('mars')"><span class="destination-visual"></span><span class="destination-code">PLANET / 02</span><strong>Mars</strong><small>Red planet visibility</small><i>Inspect orbit ↗</i></button>
+        <button class="destination-card iss-card" onclick="openPanel('satellites')"><span class="destination-visual"></span><span class="destination-code">ISS / 03</span><strong>ISS</strong><small>Track flyovers</small><i>View path ↗</i></button>
+      </div>
+      <div class="journey-path" aria-label="Journey flow"><span class="active">Scan</span><i></i><span>Observe</span><i></i><span>Learn</span><i></i><span>Act</span></div>
+    </section>
+
+    <section class="story-section solar-showcase reveal-section">
+      <div class="showcase-copy">
+        <span class="section-index">02 / FLAGSHIP EXPERIENCE</span>
+        <h2>The solar system, in motion.</h2>
+        <p>Move through a live 3D model, inspect planetary science, and fly directly to any world with cinematic camera transitions.</p>
+        <div class="showcase-actions"><button class="primary-cta" onclick="openSolarSystem()">Enter 3D Observatory <span>↗</span></button><button class="text-action" onclick="openSolarSystemAt('mars')">Fly directly to Mars</button></div>
+      </div>
+      <div class="orbit-showcase" aria-hidden="true">
+        <span class="showcase-sun"></span><span class="showcase-orbit orbit-a"><i></i></span><span class="showcase-orbit orbit-b"><i></i></span><span class="showcase-orbit orbit-c"><i></i></span><span class="showcase-orbit orbit-d"><i></i></span>
+      </div>
+    </section>
+
+    <section class="story-section nova-section reveal-section" id="meetNova">
+      <div class="nova-console">
+        <div class="nova-console-top"><span class="nova-pulse"></span>NOVA AI / ONLINE <small>SPACE COPILOT</small></div>
+        <div class="nova-orb"><span></span></div>
+        <div class="nova-transcript"><span>NOVA</span><p id="novaDemoText">Where should we explore next?</p></div>
+        <div class="nova-demo-prompts">
+          <button onclick="openChatbotWithPrompt('What is a black hole?')">What is a black hole?</button>
+          <button onclick="openChatbotWithPrompt('Take me to Mars')">Take me to Mars</button>
+          <button onclick="openChatbotWithPrompt('Show ISS')">Show ISS</button>
+          <button onclick="openChatbotWithPrompt(`Tell me today's space news`)">Today's space news</button>
+        </div>
+      </div>
+      <div class="nova-copy">
+        <span class="section-index">03 / AI SPACE COPILOT</span><h2>Meet Nova.</h2>
+        <p>Ask questions, navigate the observatory with natural language, or hear complex space science explained aloud.</p>
+        <ul class="feature-checks"><li>Context-aware space answers</li><li>Voice input and spoken responses</li><li>Instant navigation commands</li></ul>
+        <button class="secondary-cta" onclick="openChatbot()">Start a conversation</button>
+      </div>
+    </section>
+
+    <section class="story-section universe-section reveal-section" id="universeScale">
+      <div class="section-heading">
+        <div><span class="section-index">04 / SIGNATURE EXPERIENCE</span><h2>Where are you in the universe?</h2></div>
+        <p>Enter your city and zoom outward through your complete cosmic address.</p>
+      </div>
+      <form class="universe-form" onsubmit="return locateInUniverse(event)">
+        <label for="universeCity">STARTING POINT</label>
+        <div><input id="universeCity" type="text" placeholder="Enter your city" autocomplete="address-level2"><button type="submit">Reveal my cosmic address</button></div>
+      </form>
+      <div class="cosmic-address" id="cosmicAddress">
+        <div class="scale-stage current"><span class="scale-orb city-orb"></span><small>YOU ARE HERE</small><strong id="cosmicCityName">Your city</strong><em>Earth</em></div>
+        <div class="scale-connector"><i></i><span>12,742 km world</span></div>
+        <div class="scale-stage"><span class="scale-orb earth-orb"></span><small>PLANET</small><strong>Earth</strong><em>Solar System</em></div>
+        <div class="scale-connector"><i></i><span>~30 trillion km</span></div>
+        <div class="scale-stage"><span class="scale-orb solar-orb"></span><small>STAR SYSTEM</small><strong>Solar System</strong><em>Orion Arm</em></div>
+        <div class="scale-connector"><i></i><span>100,000 light-years</span></div>
+        <div class="scale-stage"><span class="scale-orb galaxy-orb"></span><small>GALAXY</small><strong>Milky Way</strong><em>Local Group</em></div>
+        <div class="scale-connector"><i></i><span>93 billion light-years</span></div>
+        <div class="scale-stage"><span class="scale-orb universe-orb"></span><small>KNOWN COSMOS</small><strong>Observable Universe</strong><em>Your cosmic home</em></div>
+      </div>
+    </section>
+
+    <section class="story-section intelligence-section reveal-section">
+      <div class="section-heading compact"><div><span class="section-index">05 / LIVE INTELLIGENCE</span><h2>Space is happening now.</h2></div></div>
+      <div class="feature-category-grid">
+        <button class="feature-category aurora-feature" onclick="openPanel('aurora')"><span class="feature-tag">AURORA LAB</span><strong>Aurora conditions</strong><p>Track visibility, solar activity, and polar light science.</p><i>Open aurora lab ↗</i></button>
+        <button class="feature-category history-feature" onclick="openPanel('historical')"><span class="feature-tag">LEARN</span><strong>History in every date</strong><p>Discover missions and astronomical events connected to today.</p><i>Open space archive ↗</i></button>
+        <button class="feature-category quiz-feature" onclick="openPanel('quiz')"><span class="feature-tag">INTERACT</span><strong>Test your cosmic IQ</strong><p>Ten questions across easy, medium, and expert astronomy.</p><i>Start knowledge lab ↗</i></button>
+      </div>
+    </section>
+
+    <div id="historyMount"></div>
+
+    <section class="story-section creators-home reveal-section">
+      <span class="section-index">07 / BUILT FOR DISCOVERY</span>
+      <div><h2>Designed by curious minds,<br>for the next generation of explorers.</h2><button class="secondary-cta" onclick="openPanel('creators')">Meet the creators</button></div>
+    </section>
+  </main>
+
+  <div id="creditsModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header"><h2>Credits & Data Sources</h2><span class="close" onclick="closeCredits()">&times;</span></div>
+      <div class="credits-content">
+        <div class="credits-section"><h4>Data & APIs</h4><ul><li><strong>NASA Open APIs:</strong> Astronomy Picture of the Day and planetary data</li><li><strong>Launch Library API:</strong> Satellite launch information</li><li><strong>IP Geolocation:</strong> Local sky and timezone estimation</li><li><strong>Web Speech API:</strong> Voice commands and text-to-speech</li><li><strong>Cohere API:</strong> AI-powered guide responses</li></ul></div>
+        <div class="credits-section"><h4>Experience</h4><ul><li><strong>Visualization:</strong> Three.js interactive solar system</li><li><strong>Typography:</strong> Space Grotesk, Manrope, and DM Mono</li><li><strong>Motion:</strong> CSS transitions and WebGL animation</li><li><strong>Purpose:</strong> Interactive space science education</li></ul></div>
+        <div class="credits-section"><h4>Educational Content</h4><ul><li>Space facts curated from scientific sources</li><li>Astronomical constellation information</li><li>Historic mission timelines</li><li>Some data and news are simulated for educational use</li></ul></div>
+      </div>
+      <div class="copyright"><p>© 2025 Dynamic Developers. Built for space exploration and education.</p></div>
+    </div>
+  </div>
+
+  <div id="solarSystemContainer" class="solar-system-container">
+    <canvas id="solarSystemCanvas" class="solar-system-canvas"></canvas>
+    <div class="solar-system-ui">
+      <button class="close-solar-system" onclick="closeSolarSystem()">Close</button>
+      <div class="solar-system-controls">
+        <h3>Navigation</h3>
+        <div class="planet-shortcuts"><button onclick="flyToPlanet('earth')">Earth</button><button onclick="flyToPlanet('mars')">Mars</button><button onclick="flyToPlanet('jupiter')">Jupiter</button><button onclick="flyToPlanet('saturn')">Saturn</button></div>
+        <button class="control-btn journey-toggle" id="solarJourneyBtn" onclick="startSolarSystemJourney()">Start Journey</button>
+        <div class="control-group"><label>Orbit Speed</label><input type="range" id="orbitSpeed" min="0.1" max="5.0" step="0.1" value="1"></div>
+        <div class="control-group"><label>Camera Distance</label><input type="range" id="cameraDistance" min="20" max="2000" step="50" value="150"></div>
+        <button class="control-btn compare-toggle" id="compareModeBtn" onclick="togglePlanetComparison()">Compare Planets</button>
+        <button class="control-btn" id="resetView">Reset View</button>
+      </div>
+      <div class="solar-system-info">
+        <div class="info-panel" id="scientificPanel"><h3><span class="planet-icon">DATA</span> Scientific Profile</h3><div class="info-data" id="scientificData"><p>Select a celestial object to inspect its scientific profile.</p></div></div>
+        <div class="info-panel" id="educationalPanel"><h3><span class="planet-icon">LOG</span> Mission Context</h3><div class="info-data" id="educationalData"><p>Discover the history and significance of our solar neighborhood.</p></div></div>
+        <div class="info-panel comparison-panel" id="comparisonPanel"><h3><span class="planet-icon">COMPARE</span> Planet Comparison</h3><div class="info-data" id="comparisonData"><p>Select a planet to compare it with Earth.</p></div></div>
+      </div>
+    </div>
+    <div class="solar-system-loading" id="solarSystemLoading"><div class="spinner"></div><p>Initializing orbital model...</p></div>
+  </div>
+
+  <footer>© 2026 PROJECT ZENITH // Celestial Radar</footer>
+
+  <div id="floating-alien"><div id="floating-label">Ask Nova, your AI sky copilot</div><img src="rocket.jpg" alt="Open Nova sky copilot" class="floating-rocket" onclick="openChatbot()" /></div>
+  <div id="chatbot-window" class="chatbot-hidden">
+    <div class="chatbot-header"><div><span class="nova-status-dot"></span><strong>Nova</strong><small>AI SPACE COPILOT</small></div><button id="chatbot-close" onclick="closeChatbot()">Close</button></div>
+    <div class="chatbot-messages" id="chatbot-messages"></div>
+    <div class="chatbot-suggestions" id="chatbotSuggestions"><button type="button" onclick="submitSuggestedPrompt('Explain black holes')">Explain black holes</button><button type="button" onclick="submitSuggestedPrompt('Tell me about Mars')">Tell me about Mars</button><button type="button" onclick="submitSuggestedPrompt('Show ISS information')">Show ISS information</button><button type="button" onclick="submitSuggestedPrompt('Latest space news')">Latest space news</button><button type="button" onclick="submitSuggestedPrompt(`Explain Saturn's rings`)">Saturn's rings</button></div>
+    <form id="chatbot-form" onsubmit="return sendChatbotMessage(event)">
+      <div class="chatbot-input-container"><input type="text" id="chatbot-input" placeholder="Ask Nova anything about space..." autocomplete="off" /><button type="button" id="chatbot-mic-btn" onclick="toggleChatbotVoiceInput()" title="Voice input">Voice</button><button type="submit">Send</button></div>
+    </form>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
